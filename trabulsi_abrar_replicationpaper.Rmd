@@ -1,0 +1,326 @@
+---
+title: "Working Draft"
+author: "Abrar Trabulsi"
+date: "4/20/2020"
+output: bookdown::pdf_document2
+#bibliography: finalbib.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+#knitr::write_bib(c("knitr", "stringr"), "finalbib.bib", width = 60)
+library(ggplot2)
+library(dplyr)
+library(tidyverse)
+library(texreg)
+library(rstanarm)
+library(stargazer)
+
+# **** REMEMBER TO CITE EVERYTHING AND TO FOOTNOTE WHERE NEEDED!!! REREAD THE RUBRIC TO KNOW FOR SURE WHERE THIS NEEDS TO HAPPEN
+```
+$$\textbf{Abstract}$$
+  In his paper 'The Desire for Social Status and Economic Conservatism among Affluent Americans', Thal (2020) shows that affluent American's desire for social status drives conservative attitudes amongst them, and the will to advance economically conservative politics. Overall, I was successful in my replication efforts in this paper. 
+$$\textbf{Introduction}$$
+  Thal begins by establishing that affluent Americans have considerable power over policy outcomes, and oftentimes use their influence to favor themselves, by advancing conservative economic policies. His study addresses a lack in relevant literature which discusses affluent Americans successfully pushing economic policy to the right, by showing evidence that the reasons behind this are psycho-social. Thal does this with a dual layered methodology. First he establishes through a survey that Americans' desire for social status strongly predicts their economic conservatism. Next, through an experiment conducted on social media, he shows that competition for social status drives economic conservatism. Thal's study builds on literature by Veblen (1899) which first documented such status seeking behavior. It however, contradicts studies such as that of Sears et.al (1980) which posits that affluent Americans support and advance conservative economic policies in order to improve their direct and material wealth. Thal finds no evidence during his study which supports this, and could hint either at the emphasized importance of psycho-social factors such as competition and the desirability of status, or, the increaisng importance of social media which makes displays of status and competition all the more important in our society. 
+  The following paper is first and formost a replication paper. All replication was conducted in R with the original code found in the Harvard Data verse HERE as well as my repo HERE. 
+$$\textbf{Review of Literature}$$
+$$\textbf{Replication}$$
+
+
+
+$$\textbf{Extension}$$
+
+```{r Extension 1, cache = TRUE}
+
+
+```
+
+
+$$\textbf{Tables and Figures}$$
+$$\textbf{Conclusion}$$
+
+
+
+$$\textbf{Appendix}$$
+Below you'll find all replicable Figures and Tables in the order they appear in the paper:
+*Please look at the RMD file found HERE for the code to replicate these tables and figures
+
+# Figure 1
+
+```{r Figure 1}
+df <- read_rds("../finalproject1006/readata/df.rds")
+
+ggplot(df, aes(x=Concrete, y=Status)) +
+  theme_bw() +
+  labs(x = "PC1: Concrete", y = "PC2: Status") +
+  scale_x_continuous(limits = c(-1,1), breaks = seq(-1, 1, .25)) +
+  scale_y_continuous(limits = c(-1,1), breaks = seq(-1, 1, .25)) +
+  coord_cartesian(xlim=c(-.95, .95), ylim=c(-.95, .95)) +
+  geom_segment(aes(x=-1,xend=1,y=0,yend=0), colour="dark grey", linetype="solid") +
+  geom_segment(aes(x=0,xend=0,y=-1,yend=1), colour="dark grey", linetype="solid") +
+  geom_text(data=df, aes(x=Concrete, y=Status, 
+                         label = Motive, fontface = "bold"),
+            size = 6) +
+  theme(text = element_text(size=25),
+        plot.margin=unit(c(1,1,1,1.2),"cm"))
+```
+
+# Figure 2
+
+```{r Figure 2}
+data <- read_rds("../finalproject1006/readata/data.rds")
+
+ggplot() +
+  geom_point(data=data, aes(x=concrete, y=status), size = 3, color = 'grey') +
+  theme_bw() +
+  labs(x = "Concrete Component Score", y = "Status Component Score") +
+  scale_x_continuous(breaks = seq(-3, 3, .5),
+                     sec.axis = dup_axis(name = "", 
+                                         breaks = seq(-3, 3, length.out = 9),
+                                         labels = sprintf("%.2f", seq(-1, 1, .25)))) +
+  scale_y_continuous(breaks = seq(-3, 3, .5),
+                     sec.axis = dup_axis(name = "", 
+                                         breaks = seq(-3, 3, length.out = 9),
+                                         labels = sprintf("%.2f", seq(-1, 1, .25)))) +
+  coord_cartesian(xlim=c(-2.95, 2.95), ylim=c(-2.95, 2.95)) +
+  geom_segment(aes(x=-3,xend=3,y=0,yend=0), colour="grey", linetype="dashed") +
+  geom_segment(aes(x=0,xend=0,y=-3,yend=3), colour="grey", linetype="dashed") +
+       theme(text = element_text(size=30),
+        		 axis.text.x=element_text(size=20),
+        		 axis.text.y=element_text(size=20)) +
+  geom_text(data=df, aes(x=Concrete.p, y=Status.p, 
+                         label = Motive, fontface = "bold"),
+            						size = 5.5) +
+   geom_segment(data=df, aes(xend = Concrete.a,yend=Status.a),
+              x=0, y=0, colour="black",
+              arrow=arrow(angle=25, length=unit(0.5, "cm")),
+              linetype="dashed",
+   						size=1) 
+```
+
+# Table 2
+
+```{r Table 2}
+dataf1 <- read_rds("../finalproject1006/readata/dataf1.rds")
+
+econcon.aff.lm <- lm(econcon ~ 
+					      status_2sd +
+					      concrete_2sd +
+					      COLI_2sd +
+                male + 
+                asian +
+					      hispanic +
+					      nhblack +
+					      other +
+                age3044 + 
+                age4554 + 
+                age55up + 
+                college + 
+                grad, 
+					      weights = weight, 
+                data = dataf1)
+
+econcon.aff.lmg <- lm(econcon ~
+					      status_2sd*male +
+					      concrete_2sd*male +
+					      COLI_2sd +
+                asian +
+					      hispanic +
+					      nhblack +
+					      other +
+                age3044 + 
+                age4554 + 
+                age55up + 
+                college + 
+                grad, 
+					      weights = weight, 
+                data = dataf1)
+
+texreg(list(econcon.aff.lm, econcon.aff.lmg),
+       single.row = FALSE,
+       caption.above = TRUE, stars = c(0.001, 0.01, 0.05), 
+       custom.model.names = c("Main Model", "Gender Interaction Model"),
+       custom.coef.names = c("Intercept",
+        										"Status",
+        										"Concrete",
+        										"Regional Cost of Living",
+        										"Male",
+        										"Asian",
+        										"Latino",
+        										"Black",
+        										"Other",
+        										"Age 30-44",
+        										"Age 45-54",
+        										"Age 55 and up",
+        										"College degree",
+        										"Graduate degree",
+														"Status X Male",
+														"Concrete X Male"))
+
+```
+
+# Figure 3
+
+```{r Figure 3}
+df3 <- read_rds("../finalproject1006/readata/df3.rds")
+
+ggplot(df3, aes(x = level, y = pred, ymin = lwr, ymax = upr, 
+							 shape = type, group = type, colour = type, linetype = type)) + 
+	geom_errorbar(width=.1, size=1, position = "dodge", linetype = "solid") +
+  geom_point(size=5, position= "dodge", aes(colour = type)) +
+  geom_line(aes(group=type), position="dodge") +
+	theme_bw() +
+  scale_colour_manual(values=c("grey35", "grey65"))  +
+  scale_linetype_manual(values=c("solid", "dashed"))  +
+  ylab("Economic Conservatism") +
+	xlab("Level") +
+  scale_y_continuous(limits=c(.45, .75),
+                     breaks = seq(0,1,.05)) +
+  theme(text = element_text(size=25),
+        axis.text.x=element_text(size=25)) +
+	guides(shape = guide_legend(reverse=F, title="Motive"),
+				 colour = guide_legend(reverse=F, title="Motive"),
+				 linetype = guide_legend(reverse=F, title="Motive"))
+```
+
+# Figure 4
+
+```{r}
+df4 <- read_rds("../finalproject1006/readata/df4.rds")
+
+ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr, 
+							 shape = type, group = type, colour = type, linetype = type)) + 
+  facet_grid(.~sex) +
+	geom_errorbar(width=.1, size=1, position="dodge", linetype="solid") +
+  geom_point(size=5, position="dodge", aes(colour = type)) +
+  geom_line(aes(group=type), position="dodge") +
+	theme_bw() +
+  scale_colour_manual(values=c("grey35", "grey65"))  +
+  scale_linetype_manual(values=c("solid", "dashed"))  +
+  ylab("Economic Conservatism") +
+	xlab("Level") +
+  scale_y_continuous(limits=c(.45, .75),
+                     breaks = seq(0,1,.05)) +
+  theme(text = element_text(size=25),
+        axis.text.x=element_text(size=25)) +
+	guides(shape = guide_legend(reverse=F, title="Motive"),
+				 colour = guide_legend(reverse=F, title="Motive"),
+				 linetype = guide_legend(reverse=F, title="Motive"))
+
+```
+
+# Table 4
+
+```{r Table 4}
+data2 <- read_rds("../finalproject1006/readata/data2.rds")
+
+aff.lm <- lm(econcon ~ condition, data = data2)
+aff.pval <- pt(coef(summary(aff.lm))[, 3], summary(aff.lm)$df[2], lower=FALSE)
+
+aff.lmg <- lm(econcon ~ condition*male, data = data2)
+aff.pvalg <- pt(coef(summary(aff.lmg))[, 3], summary(aff.lmg)$df[2], lower=FALSE)
+
+texreg(list(aff.lm, aff.lmg),
+			 override.pvalues = list(c(aff.pval),
+			                         c(aff.pvalg)),
+       caption.above = TRUE, stars = c(0.001, 0.01, 0.05),
+			 custom.model.names = c("Main Model", 
+			                        "Gender Interaction Model"),
+       custom.coef.names = c("Intercept",
+        										"Concrete",
+       											"Conspicuous Consumption",
+       											"Self-Esteem",
+       											"Social Approval",
+        										"Affluent Male",
+        										"Concrete X Affluent Male",
+       											"Conspicuous Consumption X Affluent Male",
+       											"Self-Esteem X Affluent Male",
+       											"Social Approval X Affluent Male"))
+```
+
+# Figure 6
+
+```{r Figure 6}
+
+plot <- read_rds("../finalproject1006/readata/plot.rds")
+
+ggplot(plot, aes(x=condition, y=econcon)) + 
+    geom_errorbar(aes(ymin=econcon-ci, ymax=econcon+ci), 
+                  width=.15, position = position_dodge(width = 0.5), size = .75) +
+    geom_point(position = position_dodge(width = 0.5), size=6,
+               shape=18) + 
+	  geom_text(aes(label=label),hjust=-.25, vjust=.35, size=8) +
+    ylab("Economic Conservatism") +
+	  xlab("") +
+    theme_bw() +
+       theme(text = element_text(size=20),
+          legend.position="none",
+          axis.text.x = element_text(size = 25),
+          axis.text.y = element_text(size = 25),
+    			axis.title.y = element_text(size = 25)) +
+    scale_y_continuous(limits=c(.55, .75),
+                      breaks = seq(.55,.75,.05),
+                      labels = c(".55",".60",".65",".70",".75")) +
+    scale_x_discrete(labels = c("Placebo",
+                                "Conspicuous\nConsumption",
+                                "Self-\nEsteem",
+                                "Social\nApproval",
+    														"Concrete"))
+```
+
+# Figure 7
+
+```{r Figure 7}
+plotm <- read_rds("../finalproject1006/readata/plotm.rds")
+
+ggplot(plot, aes(x=condition, y=econcon)) + 
+    geom_errorbar(aes(ymin=econcon-ci, ymax=econcon+ci), 
+                  width=.15, position = position_dodge(width = 0.5), size = .75) +
+    geom_point(position = position_dodge(width = 0.5), size=5,
+               shape=16) + 
+	  geom_text(aes(label=label),hjust=-.25, vjust=.35, size=8) +
+    ylab("Economic Conservatism") +
+	  xlab("") +
+    theme_bw() +
+       theme(text = element_text(size=20),
+          legend.position="none",
+          axis.text.x = element_text(size = 25),
+          axis.text.y = element_text(size = 25),
+    			axis.title.y = element_text(size = 25)) +
+    scale_y_continuous(limits=c(.55, .8),
+                      breaks = seq(.5,.8,.05),
+                      labels = c(".50", ".55",".60",".65",".70",".75", ".80")) +
+    scale_x_discrete(labels = c("Placebo",
+                               "Conspicuous\nConsumption",
+                               "Self-\nEsteem",
+                               "Social\nApproval",
+    													 "Concrete"))
+
+plotw <- read_rds("../finalproject1006/readata/plotw.rds")
+
+ggplot(plot, aes(x=condition, y=econcon)) + 
+    geom_errorbar(aes(ymin=econcon-ci, ymax=econcon+ci), 
+                  width=.15, position = position_dodge(width = 0.5), size = .75) +
+    geom_point(position = position_dodge(width = 0.5), size=5,
+               shape=17) + 
+	  geom_text(aes(label=label),hjust=-.25, vjust=.35, size=8) +
+    ylab("Economic Conservatism") +
+	  xlab("") +
+    theme_bw() +
+       theme(text = element_text(size=20),
+          legend.position="none",
+          axis.text.x = element_text(size = 25),
+          axis.text.y = element_text(size = 25),
+    			axis.title.y = element_text(size = 25)) +
+    scale_y_continuous(limits=c(.55, .8),
+                      breaks = seq(.55,.8,.05),
+                      labels = c(".55",".60",".65",".70",".75", ".80")) +
+    scale_x_discrete(labels = c("Placebo",
+                               "Conspicuous\nConsumption",
+                               "Self-\nEsteem",
+                               "Social\nApproval",
+    													 "Concrete"))
+```
+
+$$\textbf{Bibliography}$$
+
