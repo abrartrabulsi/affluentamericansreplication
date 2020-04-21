@@ -24,6 +24,10 @@ $$\textbf{Introduction}$$
   Thal begins by establishing that affluent Americans have considerable power over policy outcomes, and oftentimes use their influence to favor themselves, by advancing conservative economic policies. His study addresses a lack in relevant literature which discusses affluent Americans successfully pushing economic policy to the right, by showing evidence that the reasons behind this are psycho-social. Thal does this with a dual layered methodology. First he establishes through a survey that Americans' desire for social status strongly predicts their economic conservatism. Next, through an experiment conducted on social media, he shows that competition for social status drives economic conservatism. Thal's study builds on literature by Veblen (1899) which first documented such status seeking behavior. It however, contradicts studies such as that of Sears et.al (1980) which posits that affluent Americans support and advance conservative economic policies in order to improve their direct and material wealth. Thal finds no evidence during his study which supports this, and could hint either at the emphasized importance of psycho-social factors such as competition and the desirability of status, or, the increaisng importance of social media which makes displays of status and competition all the more important in our society. 
   The following paper is first and formost a replication paper. All replication was conducted in R with the original code found in the Harvard Data verse HERE as well as my repo HERE. 
 $$\textbf{Review of Literature}$$
+  Studying the relationship between affluent Americans and money is nothing new. Thorstein Veblen (1899) was the first to argue that affluent Americans pursue money for the sake of social status in his paper Theory of the Leisure Class. This pursuit is driven by two distinct phenomenon according to literature: Status motivation and concrete motivation (Lea and Webley 2006; Srivastava, Locke, and Bartol 2001; Zelizer 1994). Status motivation is defined as pursuing money for the sake of esteem, which Velbin recognized as an essential part of upper-class culture. Concrete  motivation on the other hand, is defined as the pursuit of money for material needs. Thal emphasizes that these phenomenon con coexist, but are empirically distinct which he provides evidence for in a following section. 
+  How does this behavior influence the population as a whole, however? Certainly, affluent Americans have a far greater ability to influence legislation in any which way they desire from the pure fact that they have more capital than a middle class or low income American. From campaign contributions to lobbying, affluent Americans have far greater options and levrage to advocate for the legislation they desire. Following the logic established above, it wouldn't be ridiculous to claim that affluent Americans are then more likely to advocate on behalf of conservative economic policies, because after all, those are the policies most likely to secure them capital, and therefore status and material security. More accurate than implicating all affluent Americans however, is to specifiy this claim to affluent men in particular. Men after all to comprise the majority of legislative offices, function as the heads of most lobbiest and interest groups, as well as donate more money to campaigns than their female counterparts (Weber et al. 2015;Wolfers 2015). It would be reasonable to say they share most of the responsibility for the rise of conservative economic policy in the United States which benefits so few, and harms so many. 
+  Thal's research connects and builds on existing literature in the field by showing an empirical link between this pursuit of affluence for the sake of social status drives economic conservative attitudes and advocacy. More cleverly so, half of his study is conducted through social media. Social media is an ever present medium for communication and information in the dialy lives of Americans, and apps such as Instagram do allow those who have it, to flaunt their affluence and status quite openly. The ever presence of social media means an ever presence of these displays of affluence and status, and it would not be a stretch to say that this in of itself could further drive these behaviors amongst the affluent, or at the very least, that social media is a medium that deserves sholarly exploration in its own right. Thal theorizes that the desire for social status through affluence drives conservative economic advocacy. He tests his thoery with both an observational and experimental approach. With a rigorous survey scale and a representative sample of affluent Americans, he shows that there in fact is a link between affluent Americans desires for status and support for economically conservative policy. He also finds that this relationship is especially stong in affluent men. With a seconf sample of affluent Americans, he observes their behavior when encountering posts on Facebook expressing sentiments of self worth and status following career achievments, as well as posts showing the lack thereof. After observing differences in behavior and attitudes towards the posts in the form of likes, comments etc, patticipants were asked to answer some reinforcing questions. After this part of the study, Thal concludes the same as he did after the observational pieve of his study: that desires for affluence to achieve status drive conservative economic policy support in affluent Americans, and especially men. 
+  Ultimately, this study filled a gap in existing literature and linked two separate theories regarding affluent Americans and thier drive for more affluence, as well as their political behavior. Furthermore, Thal established that the drive for affluence and subsequent political behavior is primarily driven by desires for status, not for material well being. This has great implications because the same money spent to attain more status with the purchase of a new property, coture, or other status symbols could have easily been used to help provide more and better public goods. Lastly, Thal also provides evidence that social media does in fact impact political behavior which can increase the levels of inequality in America, which are already staggering. Thal claims that he is the first to do so. 
 $$\textbf{Replication}$$
 
 
@@ -47,7 +51,7 @@ Below you'll find all replicable Figures and Tables in the order they appear in 
 
 # Figure 1
 
-```{r Figure 1}
+```{r Figure 1, include = FALSE}
 df <- read_rds("../finalproject1006/readata/df.rds")
 
 ggplot(df, aes(x=Concrete, y=Status)) +
@@ -67,7 +71,7 @@ ggplot(df, aes(x=Concrete, y=Status)) +
 
 # Figure 2
 
-```{r Figure 2}
+```{r Figure 2, include = FALSE}
 data <- read_rds("../finalproject1006/readata/data.rds")
 
 ggplot() +
@@ -100,7 +104,7 @@ ggplot() +
 
 # Table 2
 
-```{r Table 2}
+```{r Table 2, include = FALSE}
 dataf1 <- read_rds("../finalproject1006/readata/dataf1.rds")
 
 econcon.aff.lm <- lm(econcon ~ 
@@ -161,7 +165,7 @@ texreg(list(econcon.aff.lm, econcon.aff.lmg),
 
 # Figure 3
 
-```{r Figure 3}
+```{r Figure 3, include = FALSE}
 df3 <- read_rds("../finalproject1006/readata/df3.rds")
 
 ggplot(df3, aes(x = level, y = pred, ymin = lwr, ymax = upr, 
@@ -185,7 +189,7 @@ ggplot(df3, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 
 # Figure 4
 
-```{r}
+```{r Figure 4, include = FALSE}
 df4 <- read_rds("../finalproject1006/readata/df4.rds")
 
 ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr, 
@@ -211,7 +215,7 @@ ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 
 # Table 4
 
-```{r Table 4}
+```{r Table 4, include = FALSE}
 data2 <- read_rds("../finalproject1006/readata/data2.rds")
 
 aff.lm <- lm(econcon ~ condition, data = data2)
@@ -240,7 +244,7 @@ texreg(list(aff.lm, aff.lmg),
 
 # Figure 6
 
-```{r Figure 6}
+```{r Figure 6, include = FALSE}
 
 plot <- read_rds("../finalproject1006/readata/plot.rds")
 
@@ -270,7 +274,7 @@ ggplot(plot, aes(x=condition, y=econcon)) +
 
 # Figure 7
 
-```{r Figure 7}
+```{r Figure 7, include = FALSE}
 plotm <- read_rds("../finalproject1006/readata/plotm.rds")
 
 ggplot(plot, aes(x=condition, y=econcon)) + 
