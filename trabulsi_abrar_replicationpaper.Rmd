@@ -29,17 +29,58 @@ $$\textbf{Review of Literature}$$
   Thal's research connects and builds on existing literature in the field by showing an empirical link between this pursuit of affluence for the sake of social status drives economic conservative attitudes and advocacy. More cleverly so, half of his study is conducted through social media. Social media is an ever present medium for communication and information in the dialy lives of Americans, and apps such as Instagram do allow those who have it, to flaunt their affluence and status quite openly. The ever presence of social media means an ever presence of these displays of affluence and status, and it would not be a stretch to say that this in of itself could further drive these behaviors amongst the affluent, or at the very least, that social media is a medium that deserves sholarly exploration in its own right. Thal theorizes that the desire for social status through affluence drives conservative economic advocacy. He tests his thoery with both an observational and experimental approach. With a rigorous survey scale and a representative sample of affluent Americans, he shows that there in fact is a link between affluent Americans desires for status and support for economically conservative policy. He also finds that this relationship is especially stong in affluent men. With a seconf sample of affluent Americans, he observes their behavior when encountering posts on Facebook expressing sentiments of self worth and status following career achievments, as well as posts showing the lack thereof. After observing differences in behavior and attitudes towards the posts in the form of likes, comments etc, patticipants were asked to answer some reinforcing questions. After this part of the study, Thal concludes the same as he did after the observational pieve of his study: that desires for affluence to achieve status drive conservative economic policy support in affluent Americans, and especially men. 
   Ultimately, this study filled a gap in existing literature and linked two separate theories regarding affluent Americans and thier drive for more affluence, as well as their political behavior. Furthermore, Thal established that the drive for affluence and subsequent political behavior is primarily driven by desires for status, not for material well being. This has great implications because the same money spent to attain more status with the purchase of a new property, coture, or other status symbols could have easily been used to help provide more and better public goods. Lastly, Thal also provides evidence that social media does in fact impact political behavior which can increase the levels of inequality in America, which are already staggering. Thal claims that he is the first to do so. 
 $$\textbf{Replication}$$
-
+  I was able to successfully able to replicate all relevant tables and figure from this study.
 
 
 $$\textbf{Extension}$$
 
-```{r Extension 1, cache = TRUE}
+```{r Extension Regression, cache = TRUE}
+mydata <- data2 %>%
+  mutate(econcon = ifelse(econcon > .5, 1, 0))
 
+fit1 <- stan_glm(econcon ~ condition*male, data = mydata, refresh = 0, family = "binomial")
 
+print(fit1, digits = 4)
+```
+```{r calculating propabilities}
+plogis(.0027)
+
+# median likelihood of someone exposed to conspicuous consumption tests as economically conservative
+
+plogis(.0727)
+
+# median likelihood of someone exposed to social approval tests as economically conservative
+
+plogis(-.2116)
+
+# median likelihood of someone exposed to self-esteem post condition tests as economically conservative
+
+plogis(.5803)
+
+# likelihood that a male with social approval post treatment applied tests as economically conservative
+
+plogis(.5483)
+
+# lielihood that a male with conspicuous consumption post treatment applied tests as economically conservative
 ```
 
+```{r Extension Posterior Dist}
+new = data.frame(male = 1, condition = c("Conspicuous Consumption","Social Approval"))
 
+m1 <- posterior_linpred(fit1, transform = TRUE, newdata = new)
+
+hist(m1)
+
+# the distribution of posterior probabilities of testing as economically conservative if male and either conspicuous consumption or social approval post treatment is applied
+```
+```{r Extension Posterior Predictions}
+m2 <- posterior_predict(fit1, transform = TRUE, newdata = new)
+
+hist(m2)
+
+# predictions of testing economically conservative if you're a male who was treated with either Conspicuous Consumption or social approval given the posterior probabilities
+```
+  
 $$\textbf{Tables and Figures}$$
 $$\textbf{Conclusion}$$
 
