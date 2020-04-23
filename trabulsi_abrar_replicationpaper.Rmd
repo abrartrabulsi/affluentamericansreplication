@@ -19,7 +19,7 @@ library(stargazer)
 # **** REMEMBER TO CITE EVERYTHING AND TO FOOTNOTE WHERE NEEDED!!! REREAD THE RUBRIC TO KNOW FOR SURE WHERE THIS NEEDS TO HAPPEN
 ```
 $$\textbf{Abstract}$$
-  In his paper 'The Desire for Social Status and Economic Conservatism among Affluent Americans', Thal (2020) shows that affluent American's desire for social status drives conservative attitudes amongst them, and the will to advance economically conservative politics. Overall, I was successful in my replication efforts in this paper. 
+  In his paper 'The Desire for Social Status and Economic Conservatism among Affluent Americans', Thal (2020) shows that affluent American's desire for social status drives conservative attitudes amongst them, and the will to advance economically conservative politics. Overall, I was successful in my replication efforts in this paper. Moreover, I extend Thal's results by running logistic regression and appropriate analysis, such a distribution of the posterior and predictive probabilities on his primary data. I find that Thal was indeed correct. Social status does in fact drive conservative attitudes amongst affluent Americans, and especially men.
 $$\textbf{Introduction}$$
   Thal begins by establishing that affluent Americans have considerable power over policy outcomes, and oftentimes use their influence to favor themselves, by advancing conservative economic policies. His study addresses a lack in relevant literature which discusses affluent Americans successfully pushing economic policy to the right, by showing evidence that the reasons behind this are psycho-social. Thal does this with a dual layered methodology. First he establishes through a survey that Americans' desire for social status strongly predicts their economic conservatism. Next, through an experiment conducted on social media, he shows that competition for social status drives economic conservatism. Thal's study builds on literature by Veblen (1899) which first documented such status seeking behavior. It however, contradicts studies such as that of Sears et.al (1980) which posits that affluent Americans support and advance conservative economic policies in order to improve their direct and material wealth. Thal finds no evidence during his study which supports this, and could hint either at the emphasized importance of psycho-social factors such as competition and the desirability of status, or, the increaisng importance of social media which makes displays of status and competition all the more important in our society. 
   The following paper is first and formost a replication paper. All replication was conducted in R with the original code found in the Harvard Data verse HERE as well as my repo HERE. 
@@ -33,7 +33,38 @@ $$\textbf{Replication}$$
 
 
 $$\textbf{Extension}$$
+  The extension I conducted for this paper comprised of running a logistic regression on the main model, the results of which are found in Table 4, as well as plotting the posterior, and posterior predictive probabilities. 
+  Table 4 contains the results of the main model of 'Test 2' of this paper (the experiment portion), an OLS regression displaying the relationship between economic conservatism as well as the interaction variable of male, each status treatment, as well as the 'concrete' condition. Table 4 can be found below.
+  
+```{r Table 4 Ex}
+data2 <- read_rds("../finalproject1006/readata/data2.rds")
 
+aff.lm <- lm(econcon ~ condition, data = data2)
+aff.pval <- pt(coef(summary(aff.lm))[, 3], summary(aff.lm)$df[2], lower=FALSE)
+
+aff.lmg <- lm(econcon ~ condition*male, data = data2)
+aff.pvalg <- pt(coef(summary(aff.lmg))[, 3], summary(aff.lmg)$df[2], lower=FALSE)
+
+texreg(list(aff.lm, aff.lmg),
+			 override.pvalues = list(c(aff.pval),
+			                         c(aff.pvalg)),
+       caption.above = TRUE, stars = c(0.001, 0.01, 0.05),
+			 custom.model.names = c("Main Model", 
+			                        "Gender Interaction Model"),
+       custom.coef.names = c("Intercept",
+        										"Concrete",
+       											"Conspicuous Consumption",
+       											"Self-Esteem",
+       											"Social Approval",
+        										"Affluent Male",
+        										"Concrete X Affluent Male",
+       											"Conspicuous Consumption X Affluent Male",
+       											"Self-Esteem X Affluent Male",
+       											"Social Approval X Affluent Male"))
+```
+
+  I decided on logistic regression because I found it interesting to be able to interpret these results probablistically, and believe that in the context of this study, probabilities are more widely understandable than point values. 
+  The logistic regression table is below: 
 ```{r Extension Regression, cache = TRUE}
 mydata <- data2 %>%
   mutate(econcon = ifelse(econcon > .5, 1, 0))
@@ -42,7 +73,13 @@ fit1 <- stan_glm(econcon ~ condition*male, data = mydata, refresh = 0, family = 
 
 print(fit1, digits = 4)
 ```
-```{r calculating propabilities}
+
+
+  To conduct this regression I had to make an adjustment to Thal's data. The 'econcon' or economic conservative variable, was originally calculated as the mean of 4 other variables which correlated to questsions asked to the participants after being exposed to a status treatment. The responses to those 4 questions (and variable values) were on a 0-1 scale, with < .5 being not economically conservative, and > .5 being economically conservative. In order to analyse these data logistically, it was necessary that I recode the econcon variable as either 0 or 1, with the original scales for the individual variables applying (> .5 is economically conservative and vice versa).
+  I will present results analogus to those which Thal discussed in his paper. Thal idetifies 'Social Approval' and "Conspicuous Consumption' as the status treatments with significant effect of affluent American's economic conservatism. I find that the expected median probability difference between men and women testing as economically conservative after being exposed to the 'Conspicuous Consumption' and 'Social Approval' status treatment  is .5 and .51 respectively; men are more likely to test economically conservative after these treatments. The statistically insignificant results for the 'Self Esteem' status treatment defied Thal's original hypothesis, and in my logistic analysis I find that the expected median probability difference between men and women testing as economically conservative after being exposed to the 'Self Esteem' treatment is .44, less than the those found for the other two status treatments. 
+  Lastly, the interaction variables for each statistically significant status treatment (according to Thal) can be interpreted as the median difference in the probability of a male testing economically conservative when having been treated with a particular status treatment, versus the others. According this this, a male who recieved the 'Social Approval' status treatment has an expected median probability of .64 to test as economically conservative compared to the other status treatments. This validates Thal's hypothesis that social status, which is akin to social approval, motivates affluent Americans, especially men, to support conservative economic policies. 
+  The last installment of this section shows the poterior probability distribution, as well as the posterior predictive distribution for these data, specifically analyzing the probabilities of testing as economically conservative amongst men who were treated with either the 'Social Approval' or 'Conspicuous Consumption' status treatments. More quantitative interrpretations can be found in the captions.
+```{r calculating propabilities, include = FALSE}
 plogis(.0027)
 
 # median likelihood of someone exposed to conspicuous consumption tests as economically conservative
@@ -81,7 +118,6 @@ hist(m2)
 # predictions of testing economically conservative if you're a male who was treated with either Conspicuous Consumption or social approval given the posterior probabilities
 ```
   
-$$\textbf{Tables and Figures}$$
 $$\textbf{Conclusion}$$
 
 
@@ -257,7 +293,6 @@ ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 # Table 4
 
 ```{r Table 4, include = FALSE}
-data2 <- read_rds("../finalproject1006/readata/data2.rds")
 
 aff.lm <- lm(econcon ~ condition, data = data2)
 aff.pval <- pt(coef(summary(aff.lm))[, 3], summary(aff.lm)$df[2], lower=FALSE)
