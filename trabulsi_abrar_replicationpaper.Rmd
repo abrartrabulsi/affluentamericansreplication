@@ -2,7 +2,9 @@
 title: "Working Draft"
 author: "Abrar Trabulsi"
 date: "4/20/2020"
-output: bookdown::pdf_document2
+output: 
+  bookdown::pdf_document2
+toc: False
 #bibliography: finalbib.bib
 ---
 
@@ -14,7 +16,7 @@ library(dplyr)
 library(tidyverse)
 library(texreg)
 library(rstanarm)
-library(stargazer)
+library(huxtable)
 
 # **** REMEMBER TO CITE EVERYTHING AND TO FOOTNOTE WHERE NEEDED!!! REREAD THE RUBRIC TO KNOW FOR SURE WHERE THIS NEEDS TO HAPPEN
 ```
@@ -37,7 +39,11 @@ $$\textbf{Replication}$$
 
 $$\textbf{Extension}$$
   The extension I conducted for this paper comprised of running a logistic regression on the main model, the results of which are found in Table 4, as well as plotting the posterior, and posterior predictive probabilities. 
-  Table 4 contains the results of the main model of 'Test 2' of this paper (the experiment portion), an OLS regression displaying the relationship between economic conservatism as well as the interaction variable of male, each status treatment, as well as the 'concrete' condition. Table 4 can be found below.
+  Table 4 contains the results of the main model of 'Test 2' of this paper (the experiment portion), an OLS regression displaying the relationship between economic conservatism as well as the interaction variable of male, each status treatment, as well as the 'concrete' condition.
+  
+  Table 4 can be found below.
+  
+\newpage
   
 ```{r Table 4 Ex}
 data2 <- read_rds("../finalproject1006/readata/data2.rds")
@@ -48,36 +54,36 @@ aff.pval <- pt(coef(summary(aff.lm))[, 3], summary(aff.lm)$df[2], lower=FALSE)
 aff.lmg <- lm(econcon ~ condition*male, data = data2)
 aff.pvalg <- pt(coef(summary(aff.lmg))[, 3], summary(aff.lmg)$df[2], lower=FALSE)
 
-texreg(list(aff.lm, aff.lmg),
-			 override.pvalues = list(c(aff.pval),
-			                         c(aff.pvalg)),
-       caption.above = TRUE, stars = c(0.001, 0.01, 0.05),
-			 custom.model.names = c("Main Model", 
-			                        "Gender Interaction Model"),
-       custom.coef.names = c("Intercept",
-        										"Concrete",
-       											"Conspicuous Consumption",
-       											"Self-Esteem",
-       											"Social Approval",
-        										"Affluent Male",
-        										"Concrete X Affluent Male",
-       											"Conspicuous Consumption X Affluent Male",
-       											"Self-Esteem X Affluent Male",
-       											"Social Approval X Affluent Male"))
+huxreg("Base Model" = aff.lm, "Interaction Model" = aff.lmg,
+                 coefs = c('Intercept' = '(Intercept)',
+                           'Concrete' = 'conditionConcrete',
+                           'Conspicuous Consumption' = 'conditionConspicuous Consumption',
+                           'Self Esteem' = 'conditionSelf-Esteem',
+                           'Social Approval' = 'conditionSocial Approval',
+                           'Male' = 'male',
+                           'Concrete:Male' = 'conditionConcrete:male',
+                           'Conspicuous Consumption:Male' = 'conditionConspicuous Consumption:male',
+                           'Self-Esteem:Male' = 'conditionSelf-Esteem:male',
+                           'Social Approval:Male' = 'conditionSocial Approval:male'))%>%
+  set_caption("Replication of Table 4")
 ```
+\newpage
+  I decided on logistic regression because I found it interesting to be able to interpret these results probablistically, and believe that in the context of this study, probabilities are more widely understandable than point values.
+  
+  The logistic regression table is below:   
+  
 
-  I decided on logistic regression because I found it interesting to be able to interpret these results probablistically, and believe that in the context of this study, probabilities are more widely understandable than point values. 
-  The logistic regression table is below: 
 ```{r Extension Regression, cache = TRUE}
 mydata <- data2 %>%
   mutate(econcon = ifelse(econcon > .5, 1, 0))
 
 fit1 <- stan_glm(econcon ~ condition*male, data = mydata, refresh = 0, family = "binomial")
 
-print(fit1, digits = 4)
+huxreg("Gender Interactive Model" = fit1) %>%
+  set_caption("Logistic Regression Extension")
+
+# take a pic then insert graphic so results stay stable
 ```
-
-
   To conduct this regression I had to make an adjustment to Thal's data. The 'econcon' or economic conservative variable, was originally calculated as the mean of 4 other variables which correlated to questsions asked to the participants after being exposed to a status treatment. The responses to those 4 questions (and variable values) were on a 0-1 scale, with < .5 being not economically conservative, and > .5 being economically conservative. In order to analyse these data logistically, it was necessary that I recode the econcon variable as either 0 or 1, with the original scales for the individual variables applying (> .5 is economically conservative and vice versa).
   I will present results analogus to those which Thal discussed in his paper. Thal idetifies 'Social Approval' and "Conspicuous Consumption' as the status treatments with significant effect of affluent American's economic conservatism. I find that the expected median probability difference between men and women testing as economically conservative after being exposed to the 'Conspicuous Consumption' and 'Social Approval' status treatment  is .5 and .51 respectively; men are more likely to test economically conservative after these treatments. The statistically insignificant results for the 'Self Esteem' status treatment defied Thal's original hypothesis, and in my logistic analysis I find that the expected median probability difference between men and women testing as economically conservative after being exposed to the 'Self Esteem' treatment is .44, less than the those found for the other two status treatments. 
   Lastly, the interaction variables for each statistically significant status treatment (according to Thal) can be interpreted as the median difference in the probability of a male testing economically conservative when having been treated with a particular status treatment, versus the others. According this this, a male who recieved the 'Social Approval' status treatment has an expected median probability of .64 to test as economically conservative compared to the other status treatments. This validates Thal's hypothesis that social status, which is akin to social approval, motivates affluent Americans, especially men, to support conservative economic policies. 
@@ -113,6 +119,7 @@ hist(m1)
 
 # the distribution of posterior probabilities of testing as economically conservative if male and either conspicuous consumption or social approval post treatment is applied
 ```
+
 ```{r Extension Posterior Predictions}
 m2 <- posterior_predict(fit1, transform = TRUE, newdata = new)
 
