@@ -115,7 +115,7 @@ new = data.frame(male = 1, condition = c("Conspicuous Consumption","Social Appro
 
 m1 <- posterior_linpred(fit1, transform = TRUE, newdata = new)
 
-hist(m1)
+hist(m1, main = "Posterior Distribution", xlab = "Probabilities")
 
 # the distribution of posterior probabilities of testing as economically conservative if male and either conspicuous consumption or social approval post treatment is applied
 ```
@@ -123,7 +123,7 @@ hist(m1)
 ```{r Extension Posterior Predictions}
 m2 <- posterior_predict(fit1, transform = TRUE, newdata = new)
 
-hist(m2)
+hist(m2, main = "Posterior Predictions", xlab = "Probabilities")
 
 # predictions of testing economically conservative if you're a male who was treated with either Conspicuous Consumption or social approval given the posterior probabilities
 ```
