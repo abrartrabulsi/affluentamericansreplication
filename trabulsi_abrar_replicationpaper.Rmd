@@ -5,12 +5,12 @@ date: "4/20/2020"
 output: 
   bookdown::pdf_document2
 toc: False
-#bibliography: finalbib.bib
+bibliography: finalbib.bib
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-#knitr::write_bib(c("knitr", "stringr"), "finalbib.bib", width = 60)
+knitr::write_bib(c("knitr", "stringr"), "finalbib.bib", width = 60)
 library(ggplot2)
 library(dplyr)
 library(tidyverse)
@@ -23,7 +23,7 @@ library(huxtable)
 $$\textbf{Abstract}$$
   In his paper 'The Desire for Social Status and Economic Conservatism among Affluent Americans', Thal (2020) shows that affluent American's desire for social status drives conservative attitudes amongst them, and the will to advance economically conservative politics. Overall, I was successful in my replication efforts in this paper. Moreover, I extend Thal's results by running logistic regression and appropriate analysis, such a distribution of the posterior and predictive probabilities on his primary data. I find that Thal was indeed correct. Social status does in fact drive economically conservative attitudes amongst affluent Americans, and especially men.
 $$\textbf{Introduction}$$
-    hal begins by establishing that affluent Americans have considerable power over policy outcomes, and oftentimes use their influence to favor themselves, by advancing conservative economic policies. His study addresses a lack in relevant literature which discusses affluent Americans successfully pushing economic policy to the right, by showing evidence that the reasons behind this are psycho-social. Thal does this with a dual layered methodology. First he establishes through a survey that Americans' desire for social status strongly predicts their economic conservatism. Next, through an experiment conducted on social media, he shows that competition for social status drives economic conservatism. Thal's study builds on literature by Veblen (1899) which first documented such status seeking behavior. It however, contradicts studies such as that of Sears et.al (1980) which posits that affluent Americans support and advance conservative economic policies in order to improve their direct and material wealth. Thal finds no evidence during his study which supports this, and could hint either at the emphasized importance of psycho-social factors such as competition and the desirability of status, or, the increaisng importance of social media which makes displays of status and competition all the more important in our society. 
+  Thal begins by establishing that affluent Americans have considerable power over policy outcomes, and oftentimes use their influence to favor themselves, by advancing conservative economic policies. His study addresses a lack in relevant literature which discusses affluent Americans successfully pushing economic policy to the right, by showing evidence that the reasons behind this are psycho-social. Thal does this with a dual layered methodology. First he establishes through a survey that Americans' desire for social status strongly predicts their economic conservatism. Next, through an experiment conducted on social media, he shows that competition for social status drives economic conservatism. Thal's study builds on literature by Veblen (1899) which first documented such status seeking behavior. It however, contradicts studies such as that of Sears et.al (1980) which posits that affluent Americans support and advance conservative economic policies in order to improve their direct and material wealth. Thal finds no evidence during his study which supports this, and could hint either at the emphasized importance of psycho-social factors such as competition and the desirability of status, or, the increaisng importance of social media which makes displays of status and competition all the more important in our society. 
   The following paper is first and formost a replication paper with an extension of Thal's results. All replication was conducted in R with the original code found in the Harvard Data verse HERE as well as my repo HERE. All code related to this paper and the extension will also be found at this repo.
   The primary and independent findings of this paper revolved around my extension and Thal's results. I decided to run logistic regression on Thal's main data, with the same regression variables as Thal's OLS model. I decided to run logistic regression due to the practicality of interpreting information of this nature probabilistically, in my opinion it's much more meaningful and comprehessible than in point values. I also provide the posterior and posterior predictive probability distributions of this regression, with brief but substantive analysis in the caption. Through my extension, I found that Thal was indeed correct. Social status does drive economically conservative attitudes amongst affluent Americans, and especially affluent men. Thal's results being corroborated by an entirely different model greatly validates them, and only highlights the merit of his hypothesis, the rigor of his study, and data, and the necessity of further exploring this subject as well as examining the implications of these findings. 
   In the following sections you will find a review of literature covering the central literature on this subject as well as an overview of Thal's contribution to scholarship, as well as my complete extension, and subsequent conclusion. You will also find an Appendix at the end, which in the RMD of this paper contains the complete replication of all of Thal's relevant figures and tables.
@@ -34,7 +34,7 @@ $$\textbf{Review of Literature}$$
   Thal's research connects and builds on existing literature in the field by showing an empirical link between this pursuit of affluence for the sake of social status drives economic conservative attitudes and advocacy. More cleverly so, half of his study is conducted through social media. Social media is an ever present medium for communication and information in the dialy lives of Americans, and apps such as Instagram do allow those who have it, to flaunt their affluence and status quite openly. The ever presence of social media means an ever presence of these displays of affluence and status, and it would not be a stretch to say that this in of itself could further drive these behaviors amongst the affluent, or at the very least, that social media is a medium that deserves sholarly exploration in its own right. Thal theorizes that the desire for social status through affluence drives conservative economic advocacy. He tests his thoery with both an observational and experimental approach. With a rigorous survey scale and a representative sample of affluent Americans, he shows that there in fact is a link between affluent Americans desires for status and support for economically conservative policy. He also finds that this relationship is especially stong in affluent men. With a seconf sample of affluent Americans, he observes their behavior when encountering posts on Facebook expressing sentiments of self worth and status following career achievments, as well as posts showing the lack thereof. After observing differences in behavior and attitudes towards the posts in the form of likes, comments etc, patticipants were asked to answer some reinforcing questions. After this part of the study, Thal concludes the same as he did after the observational pieve of his study: that desires for affluence to achieve status drive conservative economic policy support in affluent Americans, and especially men. 
   Ultimately, this study filled a gap in existing literature and linked two separate theories regarding affluent Americans and thier drive for more affluence, as well as their political behavior. Furthermore, Thal established that the drive for affluence and subsequent political behavior is primarily driven by desires for status, not for material well being. This has great implications because the same money spent to attain more status with the purchase of a new property, coture, or other status symbols could have easily been used to help provide more and better public goods. Lastly, Thal also provides evidence that social media does in fact impact political behavior which can increase the levels of inequality in America, which are already staggering. Thal claims that he is the first to do so. 
 $$\textbf{Replication}$$
-    I was able to successfully able to replicate all relevant tables and figure from this study.
+  I was able to successfully able to replicate all relevant tables and figure from this study.
 
 
 $$\textbf{Extension}$$
@@ -142,17 +142,14 @@ hist(m2, main = "Posterior Predictions", xlab = "Probabilities")
 # predictions of testing economically conservative if you're a male who was treated with either Conspicuous Consumption or social approval given the posterior probabilities
 ```
 ![This is the posterior predictive distribution of men treated with the 'Social Approval' or 'Conspicuous Consumption' statis treatments. This table shows that a majority of men treated with either of these status treatments are predicted to test as economically conservative on the 0/1 scale established in my logstic model. This corroborates both Thal's results, as well as the results from my logistic model and previous posterior distribution.](images/posteriorpred.png){width=60%}
-\newpage
 $$\textbf{Conclusion}$$
   Thal argues in his paper 'The Desire for Social Status and Economic Conservatism among Affluent Americans' that affluent Americans, especially affluent men, are motivated to continue enriching themselves for the sake of social status, and thus, support economically conservative politics and policy. By employing a dual-methodological approach, with both an observational and experimental aspect to his study, as well as OLS regression analysis on the results from both aspects, Thal is able to substantiate his hypothesis. In my extension I run logistic regression on the same data from his primary regression, shown in Table 4, and anagolously analyze his results in a probabilistic fashion. I find that Thal's argument also holds up under a logistic regression, and quite well at that. This ultimately affirms his argument, and validates his hypothesis and his study, model, and data. However, something important to explore is the implications of these findings. With ever increasing inequality in the US, and the tensions that come with such inequality, these findings have great implications. If the affluent's suppirt for conservative economic policy is driven by the desire for social status, then I believe this will only increase with the prevelance of social media. Apps like Instagram, Twitter, and Facebook make displays of status constant, and validation for status ubiquitous. This will only increase already existing feelings fof competition and desire for social status, as well as the validation which comes with flaunting it. In a very likely scenario, this will only continue to drive inequality in the US as the rich get richer, and advocate for policies that make it easier for them to do so as well as hold onto their wealth. The social implications of this are gargantuous. It's no secret what the societal consequences of severe economic inequality are in any state, and politicians and policymakers ought to be aware of such consequences before deciding to implement policies which continue to endanger the middle class and the poor of this country.
     The government doesn't take this issue seriously enough. This paper is being written during the coronavirus pandemic, and the mass differences between the haves and have nots are as apparent as ever. As society's norms continue to be uprooted to expose the ugly truth beneath, maybe this will be America's true wake up call and saving grace from the mass inequality we've seen this century, as well as the grave consequences for leaving this problem go unaddressed. 
   
 
 $$\textbf{Appendix}$$
-  Below you'll find all replicable Figures and Tables in the order they appear in the paper:
-  *Please look at the RMD file found HERE for the code to replicate these tables and figures
-
-# Figure 1
+Below you'll find all replicable Figures and Tables in the order they appear in the paper:
+*Please look at the RMD file found HERE for the code to replicate these tables and figures
 
 ```{r Figure 1, include = FALSE}
 df <- read_rds("../finalproject1006/readata/df.rds")
@@ -171,8 +168,6 @@ ggplot(df, aes(x=Concrete, y=Status)) +
   theme(text = element_text(size=25),
         plot.margin=unit(c(1,1,1,1.2),"cm"))
 ```
-
-# Figure 2
 
 ```{r Figure 2, include = FALSE}
 data <- read_rds("../finalproject1006/readata/data.rds")
@@ -204,8 +199,6 @@ ggplot() +
               linetype="dashed",
    						size=1) 
 ```
-
-# Table 2
 
 ```{r Table 2, include = FALSE}
 dataf1 <- read_rds("../finalproject1006/readata/dataf1.rds")
@@ -266,8 +259,6 @@ texreg(list(econcon.aff.lm, econcon.aff.lmg),
 
 ```
 
-# Figure 3
-
 ```{r Figure 3, include = FALSE}
 df3 <- read_rds("../finalproject1006/readata/df3.rds")
 
@@ -289,8 +280,6 @@ ggplot(df3, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 				 colour = guide_legend(reverse=F, title="Motive"),
 				 linetype = guide_legend(reverse=F, title="Motive"))
 ```
-
-# Figure 4
 
 ```{r Figure 4, include = FALSE}
 df4 <- read_rds("../finalproject1006/readata/df4.rds")
@@ -315,8 +304,6 @@ ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 				 linetype = guide_legend(reverse=F, title="Motive"))
 
 ```
-
-# Table 4
 
 ```{r Table 4, include = FALSE}
 
@@ -343,8 +330,6 @@ texreg(list(aff.lm, aff.lmg),
        											"Self-Esteem X Affluent Male",
        											"Social Approval X Affluent Male"))
 ```
-
-# Figure 6
 
 ```{r Figure 6, include = FALSE}
 
@@ -373,8 +358,6 @@ ggplot(plot, aes(x=condition, y=econcon)) +
                                 "Social\nApproval",
     														"Concrete"))
 ```
-
-# Figure 7
 
 ```{r Figure 7, include = FALSE}
 plotm <- read_rds("../finalproject1006/readata/plotm.rds")
@@ -429,4 +412,12 @@ ggplot(plot, aes(x=condition, y=econcon)) +
 ```
 
 $$\textbf{Bibliography}$$
+@Repaper
+@LW
+@Rmark
+@S
+@Veblin
+@WW
+@JW
+@VZ
 
