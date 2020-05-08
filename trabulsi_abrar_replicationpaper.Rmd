@@ -1,9 +1,10 @@
 ---
-title: "Working Draft"
+title: "Replicating Thal's 'The Desire for Social Status and Economic Conservatism among Affluent Americans'"
 author: "Abrar Trabulsi"
 date: "4/20/2020"
 output: 
   bookdown::pdf_document2
+fig_caption: yes
 toc: False
 bibliography: bibliography.bib
 ---
@@ -130,7 +131,9 @@ hist(m1, main = "Posterior Distribution", xlab = "Probabilities")
 
 # the distribution of posterior probabilities of testing as economically conservative if male and either conspicuous consumption or social approval post treatment is applied
 ```
-![This is the posterior distribution of men treated with the 'Social Approval' or 'Conspicuous Consumption' status treatments. This distribution is roughly normal with a slight left skew. The median of these median expactations is around .75, or the probability of men treated with these status treatments testing as economically conservative is .75. Furthermore, the range is of the distribution means there is a high likelihood that men treated with these status treatments would test as economically conservative. This corroborates Thal's original results and conclusions about the affects of these status treatments on men.](images/posteriordist.png){width=70%}
+```{r fig.align="center",out.width="50%",fig.cap = "This is the posterior distribution of men treated with the 'Social Approval' or 'Conspicuous Consumption' status treatments. This distribution is roughly normal with a slight left skew. The median of these median expactations is around .75, or the probability of men treated with these status treatments testing as economically conservative is .75. Furthermore, the range is of the distribution means there is a high likelihood that men treated with these status treatments would test as economically conservative. This corroborates Thal's original results and conclusions about the affects of these status treatments on men."}
+knitr::include_graphics(here::here("images", "posteriordist.png"))
+```
 ```{r Extension Posterior Predictions, include = FALSE}
 m2 <- posterior_predict(fit1, transform = TRUE, newdata = new)
 
@@ -138,7 +141,10 @@ hist(m2, main = "Posterior Predictions", xlab = "Probabilities")
 
 # predictions of testing economically conservative if you're a male who was treated with either Conspicuous Consumption or social approval given the posterior probabilities
 ```
-
+```{r fig.align="center",out.width="50%",fig.cap = "This is the posterior predictive distribution of men treated with the 'Social Approval' or 'Conspicuous Consumption' status treatments. This table shows that a majority of men treated with either of these status treatments are predicted to test as economically conservative. This corroborates both Thal's results, as well as the results from my logistic model and previous posterior distribution"}
+knitr::include_graphics(here::here("images", "posteriorpred.png"))
+```
+\newpage
 $$\textbf{Conclusion}$$
   Thal argues in his paper 'The Desire for Social Status and Economic Conservatism among Affluent Americans' that affluent Americans, especially affluent men, are motivated to continue enriching themselves for the sake of social status, and thus, support economically conservative politics and policy. By employing a dual-methodological approach, with both an observational and experimental aspect to his study, as well as OLS regression analysis on the results from both aspects, Thal is able to substantiate his hypothesis. In my extension I run logistic regression on the same data from his primary regression, shown in Table 4, and anagolously analyze his results in a probabilistic fashion. I find that Thal's argument also holds up under a logistic regression, and quite well at that. This ultimately affirms his argument, and validates his hypothesis and his study, model, and data. However, something important to explore is the implications of these findings. With ever increasing inequality in the US, and the tensions that come with such inequality, these findings have great implications. If the affluent's suppirt for conservative economic policy is driven by the desire for social status, then I believe this will only increase with the prevelance of social media. Apps like Instagram, Twitter, and Facebook make displays of status constant, and validation for status ubiquitous. This will only increase already existing feelings of competition and desire for social status, as well as the validation which comes with flaunting it. In a very likely scenario, this will only continue to drive inequality in the US as the rich get richer, and advocate for policies that make it easier for them to do so as well as hold onto their wealth. The social implications of this are gargantuous. It's no secret what the societal consequences of severe economic inequality are in any state, and politicians and policymakers ought to be aware of such consequences before deciding to implement policies which continue to endanger the middle class and the poor of this country.
     The government doesn't take this issue seriously enough. This paper is being written during the coronavirus pandemic, and the mass differences between the haves and have nots are as apparent as ever. As society's norms continue to be uprooted to expose the ugly truth beneath, maybe this will be America's true wake up call and saving grace from the mass inequality we've seen this century, as well as the grave consequences for leaving this problem go unaddressed. 
