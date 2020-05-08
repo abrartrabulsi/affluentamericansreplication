@@ -47,7 +47,7 @@ $$\textbf{Extension}$$
 
 ![Replication of Thal's Table 4](images/reptable.png){height=60%}
 ```{r Table 4 Ex, include = FALSE}
-data2 <- read_rds("../finalproject1006/readata/data2.rds")
+data2 <- read_rds("../readata/data2.rds")
 
 # reading in specific data which I grabbed from the replication files, this makes working with inidivdual chunks of code and replicating much easier
 
@@ -169,7 +169,7 @@ $$\textbf{Appendix}$$
 *Please look at the RMD file found [HERE](https://github.com/abrartrabulsi/affluentamericansreplication) for the code to replicate these tables and figures.
 
 ```{r Figure 1, include = FALSE}
-df <- read_rds("../finalproject1006/readata/df.rds")
+df <- read_rds("../readata/df.rds")
 
 # just as I did in previous figures and tables, I'm reading in a segment of data from the original replication file. I will do this for all following replication
 
@@ -189,7 +189,7 @@ ggplot(df, aes(x=Concrete, y=Status)) +
 ```
 
 ```{r Figure 2, include = FALSE}
-data <- read_rds("../finalproject1006/readata/data.rds")
+data <- read_rds("../readata/data.rds")
 
 ggplot() +
   geom_point(data=data, aes(x=concrete, y=status), size = 3, color = 'grey') +
@@ -220,7 +220,7 @@ ggplot() +
 ```
 
 ```{r Table 2, include = FALSE}
-dataf1 <- read_rds("../finalproject1006/readata/dataf1.rds")
+dataf1 <- read_rds("../readata/dataf1.rds")
 
 econcon.aff.lm <- lm(econcon ~ 
 					      status_2sd +
@@ -260,7 +260,7 @@ huxreg("Base Model" = econcon.aff.lm, "Interaction Model" = econcon.aff.lmg) %>%
 ```
 
 ```{r Figure 3, include = FALSE}
-df3 <- read_rds("../finalproject1006/readata/df3.rds")
+df3 <- read_rds("../readata/df3.rds")
 
 ggplot(df3, aes(x = level, y = pred, ymin = lwr, ymax = upr, 
 							 shape = type, group = type, colour = type, linetype = type)) + 
@@ -282,7 +282,7 @@ ggplot(df3, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 ```
 
 ```{r Figure 4, include = FALSE}
-df4 <- read_rds("../finalproject1006/readata/df4.rds")
+df4 <- read_rds("../readata/df4.rds")
 
 ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr, 
 							 shape = type, group = type, colour = type, linetype = type)) + 
@@ -307,7 +307,7 @@ ggplot(df4, aes(x = level, y = pred, ymin = lwr, ymax = upr,
 
 ```{r Figure 6, include = FALSE}
 
-plot <- read_rds("../finalproject1006/readata/plot.rds")
+plot <- read_rds("../readata/plot.rds")
 
 ggplot(plot, aes(x=condition, y=econcon)) + 
     geom_errorbar(aes(ymin=econcon-ci, ymax=econcon+ci), 
@@ -334,7 +334,7 @@ ggplot(plot, aes(x=condition, y=econcon)) +
 ```
 
 ```{r Figure 7, include = FALSE}
-plotm <- read_rds("../finalproject1006/readata/plotm.rds")
+plotm <- read_rds("../readata/plotm.rds")
 
 ggplot(plot, aes(x=condition, y=econcon)) + 
     geom_errorbar(aes(ymin=econcon-ci, ymax=econcon+ci), 
@@ -359,7 +359,7 @@ ggplot(plot, aes(x=condition, y=econcon)) +
                                "Social\nApproval",
     													 "Concrete"))
 
-plotw <- read_rds("../finalproject1006/readata/plotw.rds")
+plotw <- read_rds("../readata/plotw.rds")
 
 ggplot(plot, aes(x=condition, y=econcon)) + 
     geom_errorbar(aes(ymin=econcon-ci, ymax=econcon+ci), 
