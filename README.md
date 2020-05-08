@@ -5,7 +5,7 @@
     
     2. The PDF of my paper and a .bib file
     
-    3. Files which have the necessary PNG and RDS files to knit my PDF
+    3. Files which have the necessary PNG (images) and RDS files (readata) to knit my PDF
     
     4. Original replication files for Thal's paper as well as a pdf of his paper
 
