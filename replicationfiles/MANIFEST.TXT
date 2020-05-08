@@ -1,0 +1,5 @@
+APSR Test 1 Codebook.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) 32770 bytes.
+APSR Test 2 Codebook.xlsx (application/vnd.openxmlformats-officedocument.spreadsheetml.sheet) 31501 bytes.
+apsrtest1.dta (application/x-stata) 451744 bytes.
+apsrtest2.dta (application/x-stata) 98028 bytes.
+Thal APSR Replication Code.R (type/x-r-syntax) 27022 bytes.
